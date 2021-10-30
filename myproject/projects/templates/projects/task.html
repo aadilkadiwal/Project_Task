@@ -1,0 +1,41 @@
+{% extends "projects/base.html" %}
+{% block content %}
+    <table class="table table-sm">
+        <thead>
+            <tr class="table-info">
+                <th scope="col">No.</th>
+                <th scope="col">Task name</th>
+                <th scope="col">Task description</th>
+                <th scope="col">Project</th>
+                <th scope="col">Status</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in object.tasks.all %}
+                <tr class="table-success">
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>
+                        <h6 class="article-title">{{ task.name }}</h6>
+                    </td>
+                    <td>
+                        <p class="article-content">{{ task.description }}</p>
+                    </td>
+                    <td>
+                        <p>{{ task.project.name }}</p>
+                    </td>
+                    <td>
+                        <p class="article-content">{{ task.status }}</p>
+                    </td>
+                    <td>
+                        <a class="btn btn-warning btn-sm mt-1 mb-1" href="{% url 'task-update' object.id task.id %}">Update</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'task-delete' object.id task.id %}">delete</a>
+                    </td>
+                </tr>
+            {% endfor %}  
+        </tbody>  
+    </table>
+{% endblock content %}                

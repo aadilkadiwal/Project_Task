@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 from django.db.models.enums import TextChoices
 from django.utils import timezone
 
@@ -20,6 +21,10 @@ class Project(models.Model):
     def __str__(self):
         return self.name  
 
+    # After creating new project it reverse to 'project-home' page
+    def get_absolute_url(self):
+        return reverse('project-home')
+
 class Task(models.Model):
     class Status(TextChoices):
         todo = 'TO DO'
@@ -33,3 +38,8 @@ class Task(models.Model):
 
     def __str__(self):
         return self.name
+
+    # After creating new task it reverse to 'project-detail' page
+    def get_absolute_url(self):
+        return reverse('project-detail', kwargs={'pk': self.project.pk})
+    

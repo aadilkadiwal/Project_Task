@@ -1,20 +1,54 @@
 {% extends "projects/base.html" %}
 {% block content %}
-    <br>
-    {% for project in projects %}
-        <article class="media content-section">
-            <div class="media-body">
-            <div class="article-metadata">
-                <a class="mr-2" href="#">{{ project.created_by.first_name }} {{ project.created_by.last_name }}</a>
-                <small class="text-muted">{{ project.client }}</small>
-            </div>
-            <div>
-                <small class="text-muted">{{ project.start_date }},</small>
-                <small class="text-muted">{{ project.end_date }}</small>
-            </div>
-            <h2><a class="article-title" href="#">{{ project.name }}</a></h2>
-            <p class="article-content">{{ project.description }}</p>
-            </div>
-        </article>
-    {% endfor %}
-{% endblock content %}    
+    <table class="table table-sm">
+        <thead>
+            <tr class="table-warning">
+                <th scope="col">No.</th>
+                <th scope="col">Project name</th>
+                <th scope="col">Project description</th>
+                <th scope="col">Client name</th>
+                <th scope="col">Start date</th>
+                <th scope="col">End date</th>
+                <th scope="col">Created by</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for project in projects %}
+            <tr class="table-secondary">
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>
+                    <h6><a class="article-title" href="{% url 'project-detail' project.pk %}">{{ project.name }}</a></h6>
+                </td>
+                <td>
+                    <p class="article-content">{{ project.description }}</p>
+                </td>
+                <td>
+                    <p class="article-content">{{ project.client }}</p>
+                </td>
+                <td>
+                    <small class="text-muted">{{ project.start_date }}</small>
+                </td>
+                <td>
+                    <small class="text-muted">{{ project.end_date }}</small>
+                </td>
+                <td>
+                    <img class="rounded-circle article-img" src="{{ project.created_by.profile.image.url }}" height=40 width=40>
+                    <a class="mr-2" href="#">{{ project.created_by.first_name }} {{ project.created_by.last_name }}</a>
+                </td>
+                <td>
+                    {% if project.created_by == user %}
+                        <a class="btn btn-warning btn-sm mt-1 mb-1" href="{% url 'project-update' project.id %}">Update</a>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if project.created_by == user %}
+                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'project-delete' project.id %}">Delete</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}     
+        </tbody>
+    </table>
+{% endblock content %}  
