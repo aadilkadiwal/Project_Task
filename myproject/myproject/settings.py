@@ -137,5 +137,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # After login user redirect to home page
 LOGIN_REDIRECT_URL = 'project-home'
+
 # @login_required to find login page
 LOGIN_URL = 'login'

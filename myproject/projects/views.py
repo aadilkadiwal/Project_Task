@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.views.generic import (
     ListView,
     DetailView,
@@ -22,8 +23,34 @@ class ProjectListView(ListView):
     model = Project
     template_name = 'projects/project.html' # <app>/<model>_<viewtype>.html
     context_object_name = 'projects'
+
+    # Only that project will show whoes end date and time is greter then current date and time 
     queryset = Project.objects.filter(Q(end_date__gte=timezone.now())) 
-    ordering = ['-start_date']
+
+    # The close end_date will show on top
+    ordering = ['end_date']
+
+    # In 1 page 2 project should be there
+    paginate_by = 5
+
+# To display only that project which user has created
+class UserProjectListView(ListView):
+    model = Project
+    template_name = 'projects/user_projects.html' # <app>/<model>_<viewtype>.html
+    context_object_name = 'projects'
+
+    # Only that project will show whoes end date and time is greter then current date and time 
+    # queryset = Project.objects.filter(Q(end_date__gte=timezone.now())) 
+
+    # In 1 page 2 project should be there
+    paginate_by = 5   
+
+    # To check user by username
+    def get_queryset(self):
+
+        # If user exist then we will capture them in user variable and if user doesn't exist then it will return 404 
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return Project.objects.filter(created_by=user).order_by('-end_date')
 
 class ProjectDetailView(DetailView):
     model = Project
@@ -35,6 +62,7 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
     fields = ['name', 'description', 'client', 'start_date', 'end_date']
 
     def form_valid(self, form):
+
         # The project is created_by the user who is login
         form.instance.created_by = self.request.user
         messages.success(self.request, f'New Project has been created!')
@@ -77,7 +105,7 @@ class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         # Updating a current project
         project = self.get_object()
 
-        # To check correct user is updating project or not
+        # To check correct user is deleting project or not
         if self.request.user == project.created_by:
             return True
         else:

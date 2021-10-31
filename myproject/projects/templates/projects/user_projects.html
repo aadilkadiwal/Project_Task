@@ -1,5 +1,6 @@
 {% extends "projects/base.html" %}
 {% block content %}
+    <h2 class="mb-3">Project created by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h2>
     <table class="table table-sm">
         <thead>
             <tr class="table-light">

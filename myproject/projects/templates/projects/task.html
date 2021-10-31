@@ -2,7 +2,7 @@
 {% block content %}
     <table class="table table-sm">
         <thead>
-            <tr class="table-info">
+            <tr class="table-light">
                 <th scope="col">No.</th>
                 <th scope="col">Task name</th>
                 <th scope="col">Task description</th>
@@ -14,7 +14,7 @@
         </thead>
         <tbody>
             {% for task in object.tasks.all %}
-                <tr class="table-success">
+                <tr class="table-primary">
                     <th scope="row">{{ forloop.counter }}</th>
                     <td>
                         <h6 class="article-title">{{ task.name }}</h6>
@@ -38,4 +38,5 @@
             {% endfor %}  
         </tbody>  
     </table>
+    <a class="btn btn-info btn-sm mt-1 mb-1" href="{% url 'task-create' object.id %}">New Task</a>
 {% endblock content %}                
