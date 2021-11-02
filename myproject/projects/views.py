@@ -19,7 +19,7 @@ def project(request):
     }
     return render(request, 'projects/project.html', context)
 
-class ProjectListView(ListView):
+class ProjectListView(LoginRequiredMixin, ListView):
     model = Project
     template_name = 'projects/project.html' # <app>/<model>_<viewtype>.html
     context_object_name = 'projects'
@@ -34,7 +34,7 @@ class ProjectListView(ListView):
     paginate_by = 5
 
 # To display only that project which user has created
-class UserProjectListView(ListView):
+class UserProjectListView(LoginRequiredMixin, ListView):
     model = Project
     template_name = 'projects/user_projects.html' # <app>/<model>_<viewtype>.html
     context_object_name = 'projects'
@@ -52,7 +52,7 @@ class UserProjectListView(ListView):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return Project.objects.filter(created_by=user).order_by('-end_date')
 
-class ProjectDetailView(DetailView):
+class ProjectDetailView(LoginRequiredMixin, DetailView):
     model = Project
     template_name = 'projects/task.html' # <app>/<model>_<viewtype>.html  
 
