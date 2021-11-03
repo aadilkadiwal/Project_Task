@@ -44,7 +44,7 @@ Now your Project_Task directory looks like:
 * Project_Task
     * myproject
     * venv
-    * requirement
+    * requirements.txt
 
 Virtual Environement is created, to **activate** it.
 
@@ -78,6 +78,12 @@ For a user, the profile picture should be saved. Run this command.
     (venv) C:\Users\Shaan\Desktop\Project_Task>pip install Pillow
 ```
 
+For installing all dependencies.
+
+```Command Prompt
+    (venv) C:\Users\Shaan\Desktop\Project_Task>pip install -r requirements.txt
+```
+
 After installing all libraries. Now it's time to run a project.Before that you have to go in myproject folder.
 
 ```Command Prompt
@@ -100,4 +106,4 @@ The **URL** which you will get run in your Web browser:**http://127.0.0.1:8000**
 
 You will get a dummy data.
 
-If you want that dummy data should not be there [connect me](https://www.linkedin.com/in/aadil-kadiwal)
+If you want that dummy data should not be there [connect me](https://www.linkedin.com/in/aadil-kadiwal).
