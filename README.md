@@ -58,26 +58,6 @@ Your command Prompt looks like:
     (venv) C:\Users\Shaan\Desktop\Project_Task>
 ```
 
-Now, let's install **django**
-
-```Command Prompt
-    (venv) C:\Users\Shaan\Desktop\Project_Task>pip install django
-```
-
-Make sure your django --version should be **3.2.7** or **above**.
-
-Install a third party django application for **forms**.
-
-```Command Prompt
-    (venv) C:\Users\Shaan\Desktop\Project_Task>pip install django-crispy-forms
-```
-
-For a user, the profile picture should be saved. Run this command.
-
-```Command Prompt
-    (venv) C:\Users\Shaan\Desktop\Project_Task>pip install Pillow
-```
-
 For installing all dependencies.
 
 ```Command Prompt
